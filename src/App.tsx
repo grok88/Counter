@@ -5,11 +5,11 @@ import ButtonPanel from "./components/button-panel/ButtonPanel";
 
 
 function App() {
+    let maxCount = 5;
     let [counter, setCounter] = useState<number>(0);
 
     const incrementCounter = () => {
-        counter += 1;
-        setCounter(counter);
+        setCounter(counter => counter + 1);
     }
 
     const resetCounter = () => {
@@ -18,10 +18,11 @@ function App() {
 
     return (
         <div className={'counterBlock'}>
-            <Display counter={counter}/>
+            <Display counter={counter} maxCount={maxCount}/>
             <ButtonPanel incrementCounter={incrementCounter}
                          resetCounter={resetCounter}
                          counter={counter}
+                         maxCount={maxCount}
             />
         </div>
     );

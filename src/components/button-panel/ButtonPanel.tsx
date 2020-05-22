@@ -5,22 +5,23 @@ import style from './ButtonPanel.module.css';
 type ButtonPanelPropsType = {
     incrementCounter: () => void;
     resetCounter: () => void;
-    counter: number
+    counter: number;
+    maxCount:number
 }
 
 const ButtonPanel = (props: ButtonPanelPropsType) => {
-    const {incrementCounter, resetCounter, counter} = props;
+    const {incrementCounter, resetCounter, counter, maxCount} = props;
 
     return (
         <div className={style.buttonBlock}>
             <button className={style.incButton}
                     onClick={incrementCounter}
-                    disabled={counter === 5 ? true : false}
+                    disabled={counter === maxCount}
             >INC
             </button>
             <button className={style.reset}
                     onClick={resetCounter}
-                    disabled={counter === 0 ? true : false}>RESET
+                    disabled={counter === 0}>RESET
             </button>
         </div>
     );

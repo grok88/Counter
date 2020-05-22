@@ -3,12 +3,13 @@ import style from './Display.module.css';
 
 type DisplayPropsType = {
     counter: number;
+    maxCount:number;
 }
 
 const Display = (props: DisplayPropsType) => {
-    const {counter} = props;
+    const {counter, maxCount} = props;
     return (
-        <div className={`${style.display} ${counter === 5 ? style.red : ""}`}>
+        <div className={`${style.display} ${counter === maxCount ? style.red : ""}`}>
             {counter}
         </div>
     );
