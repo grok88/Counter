@@ -1,0 +1,8 @@
+.counterBlock{
+  width: 400px;
+  height: 250px;
+  margin: 10px auto;
+  border: 3px solid #66D9F8;
+  border-radius: 5px;
+}
+

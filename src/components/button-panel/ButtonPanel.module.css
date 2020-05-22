@@ -1,0 +1,12 @@
+.buttonBlock{
+    margin: 0 auto;
+    width: 80%;
+    /*outline: 1px solid;*/
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.incButton, .reset {
+    width: 40%;
+}
