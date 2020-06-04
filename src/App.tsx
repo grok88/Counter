@@ -1,13 +1,22 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Counter} from "./Counter";
-import {v1} from "uuid";
+import Display from "./components/display/Display";
+import {Button} from "./components/button-panel/Button";
+import {InputBlock} from "./InputBlock";
 
 
 function App() {
     let maxCount = 5;
     let [counter, setCounter] = useState<number>(0);
 
+    // для Initial
+    let [initialCount, setInitialCount] = useState({
+            min:0,
+            max:5
+        }
+    )
+
+    console.log(initialCount)
     const incrementCounter = () => {
         setCounter(counter => counter + 1);
     }
@@ -16,46 +25,38 @@ function App() {
         setCounter(0);
     }
 
-    let [counters, setCounters] = useState([
-        {
-            id: v1(),
-            // buttons:[
-            //     {buttonId:v1(), title:"INC", disabled:counter === maxCount},
-            //     {buttonId:v1(), title:"RESET", disabled:counter === 0},
-            // ]
-        }
-    ]);
+    const setInitialValue = () => {
+        console.log('Initial');
+    }
 
     return (
-        <>
-            {
-                counters.map(elem => {
-                    return <Counter
-                        key={elem.id}
-                        resetCounter={resetCounter}
-                        incrementCounter={incrementCounter}
-                        maxCount={maxCount}
-                        counter={counter}
-                      //  buttons={elem.buttons}
-                    />
-                })
-            }
-            {/*<Counter resetCounter={resetCounter}*/}
-            {/*         incrementCounter={incrementCounter}*/}
-            {/*         maxCount={maxCount}*/}
-            {/*         counter={counter}*/}
-            {/*/>*/}
-        </>
-    );
+     <>
+         <div className={'counterBlock'}>
+            <InputBlock counter={counter}/>
+             <div className={'buttonBlock'}>
+                 <Button title={'SET'}
+                         typeCounter={setInitialValue}
+                         disabled={false}
 
-    /* <div className={'counterBlock'}>
-         <Display counter={counter} maxCount={maxCount}/>
-         <ButtonPanel incrementCounter={incrementCounter}
-                      resetCounter={resetCounter}
-                      counter={counter}
-                      maxCount={maxCount}
-         />
-     </div>*/
+                 />
+             </div>
+         </div>
+
+         <div className={'counterBlock'}>
+             <Display counter={counter} maxCount={maxCount}/>
+             <div className={'buttonBlock'}>
+                 <Button title={'INC'}
+                         typeCounter={incrementCounter}
+                         disabled={counter === maxCount}
+                 />
+                 <Button title={'RESET'}
+                         typeCounter={resetCounter}
+                         disabled={counter === 0}
+                 />
+             </div>
+         </div>
+     </>
+    );
 }
 
 export default App;
