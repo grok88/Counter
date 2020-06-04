@@ -43,13 +43,13 @@ function App() {
     }
     // Установка минимальное значения
     const onChangeMin = (value: number) => {
-        if(value < 0){
+        if (value < 0 || value >= initialCount.max) {
             setError('Incorect value!');
             initialCount.disabled = true;
             setInitialCount({...initialCount});
         } else {
-            setError(null);
 
+            setError(null);
             initialCount.disabled = false;
             setInitialCount({...initialCount});
         }
@@ -61,7 +61,7 @@ function App() {
     }
     // Установка максимального значения значения
     const onChangeMax = (value: number) => {
-        if(value <= initialCount.min ){
+        if (value <= initialCount.min) {
             setError('Incorect value!');
             initialCount.disabled = true;
             setInitialCount({...initialCount});
