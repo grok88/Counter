@@ -6,9 +6,12 @@
     border-radius: 5px;
     text-align: center;
     padding-top: 20px;
-    font-size: 60px;
+    font-size: 30px;
 }
 
 .red{
     color: red;
+}
+.setError{
+    color:red;
 }

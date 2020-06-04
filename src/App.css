@@ -34,3 +34,8 @@
   text-align: center;
   padding-top: 20px;
 }
+
+.error{
+  border:1px solid red;
+  background-color: #db9292;
+}
