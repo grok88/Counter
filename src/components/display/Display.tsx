@@ -6,14 +6,15 @@ import { InitialCountType } from "../../App";
 type DisplayPropsType = {
     counter: number;
     initialCount:InitialCountType,
-    error:string | null
+    error:boolean
+    message:string | null
 }
 
 const Display = (props: DisplayPropsType) => {
-    const {counter,initialCount, error} = props;
+    const {counter,initialCount, error, message} = props;
     return (
         <div className={`${style.display} ${counter === initialCount.max ? style.red : ""}`}>
-            <span className={`${error ? style.setError : ''}`}>{error ? error : counter}</span>
+            <span className={`${error ? style.setError : ''}`}>{message ? message : counter}</span>
         </div>
     );
 }

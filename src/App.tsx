@@ -11,7 +11,8 @@ export type InitialCountType = {
 }
 
 function App() {
-    let [error, setError] = useState<string | null>(null);
+    let [error, setError] = useState<boolean>(false);
+    let [message, setMessage] = useState<string | null>(null);
 
     let [counter, setCounter] = useState<number>(0);
 
@@ -34,6 +35,7 @@ function App() {
 
     // Передача начальных значений установленых в <InputBlock>
     const setInitialValue = () => {
+        setMessage(null);
         counter = initialCount.min;
         setCounter(counter);
 
@@ -43,42 +45,42 @@ function App() {
     }
     // Установка минимальное значения
     const onChangeMin = (value: number) => {
+
         if (value < 0 || value >= initialCount.max) {
-            setError('Incorect value!');
+            setError(true);
+            setMessage('Incorrect value');
             initialCount.disabled = true;
             setInitialCount({...initialCount});
+            //setInitialCount({...initialCount, disabled: true});
         } else {
 
-            setError(null);
+            setError(false);
             initialCount.disabled = false;
-            setInitialCount({...initialCount});
+            setMessage('Enter value press Set');
+            setInitialCount({...initialCount,disabled: false});
         }
 
-        initialCount.min = value;
         setInitialCount({
-            ...initialCount
+            ...initialCount, min: value
         });
     }
     // Установка максимального значения значения
     const onChangeMax = (value: number) => {
-        if (value <= initialCount.min) {
-            setError('Incorect value!');
-            initialCount.disabled = true;
-            setInitialCount({...initialCount});
-        } else {
-            setError(null);
 
-            initialCount.disabled = false;
-            setInitialCount({...initialCount});
+        if (value <= initialCount.min) {
+            setError(true);
+            setMessage('Incorrect value');
+            setInitialCount({...initialCount, disabled: true});
+        } else {
+            setError(false);
+            setInitialCount({...initialCount, disabled: false});
+            setMessage('Enter value press Set');
         }
 
-        initialCount.max = value;
         setInitialCount({
-            ...initialCount
+            ...initialCount, max: value
         });
-
     }
-
     return (
         <>
             {/*Блок установки значений*/}
@@ -96,7 +98,7 @@ function App() {
 
             {/*Блок отображения счетчика*/}
             <div className={'counterBlock'}>
-                <Display counter={counter} initialCount={initialCount} error={error}/>
+                <Display counter={counter} initialCount={initialCount} message={message} error={error}/>
                 <div className={'buttonBlock'}>
                     <Button title={'INC'}
                             typeCounter={incrementCounter}

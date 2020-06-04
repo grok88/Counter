@@ -9,7 +9,7 @@ type InputBlockType = {
     counter: CounterPropsType,
     onChangeMin: (value: number) => void,
     onChangeMax: (value: number) => void,
-    error:string | null
+    error:boolean
 }
 export const InputBlock = (props: InputBlockType) => {
     const {counter, onChangeMin, onChangeMax,error} = props;
