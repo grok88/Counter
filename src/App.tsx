@@ -11,7 +11,9 @@ export type InitialCountType = {
 }
 
 function App() {
+    // Для добавления класса ошибуи на инпуты при неверных значениях
     let [error, setError] = useState<boolean>(false);
+    //Отображение на display сообщений при ошибках, изменении значений и самого count
     let [message, setMessage] = useState<string | null>(null);
 
     let [counter, setCounter] = useState<number>(0);
@@ -45,7 +47,6 @@ function App() {
     }
     // Установка минимальное значения
     const onChangeMin = (value: number) => {
-
         if (value < 0 || value >= initialCount.max) {
             setError(true);
             setMessage('Incorrect value');
@@ -53,7 +54,6 @@ function App() {
             setInitialCount({...initialCount});
             //setInitialCount({...initialCount, disabled: true});
         } else {
-
             setError(false);
             initialCount.disabled = false;
             setMessage('Enter value press Set');
@@ -70,9 +70,12 @@ function App() {
         if (value <= initialCount.min) {
             setError(true);
             setMessage('Incorrect value');
-            setInitialCount({...initialCount, disabled: true});
+            initialCount.disabled = true;
+            setInitialCount({...initialCount});
+           // setInitialCount({...initialCount, disabled: true});
         } else {
             setError(false);
+            initialCount.disabled = false;
             setInitialCount({...initialCount, disabled: false});
             setMessage('Enter value press Set');
         }
