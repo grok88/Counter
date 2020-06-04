@@ -6,6 +6,7 @@ export type ButtonsType1 = {
     buttonId:string,
     title:string,
     disabled:boolean
+    onClick: () => void
 }
 
 type CounterType = {
@@ -13,10 +14,10 @@ type CounterType = {
     maxCount: number,
     incrementCounter: () => void,
     resetCounter: () => void,
-   // buttons:Array<ButtonsType1>
+   buttons:Array<ButtonsType1>
 }
 export const Counter = (props: CounterType) => {
-    const {counter, incrementCounter, maxCount, resetCounter} = props;
+    const {counter, incrementCounter, maxCount, resetCounter, buttons} = props;
     return (
         <div className={'counterBlock'}>
             <Display counter={counter} maxCount={maxCount}/>
@@ -24,7 +25,7 @@ export const Counter = (props: CounterType) => {
                          resetCounter={resetCounter}
                          counter={counter}
                          maxCount={maxCount}
-                       //  buttons={buttons}
+                        buttons={buttons}
             />
         </div>
     );

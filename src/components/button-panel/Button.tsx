@@ -8,8 +8,7 @@ type ButtonType = {
 }
 
 export const Button = (props: ButtonType) => {
-    debugger
-    const {typeCounter, title, disabled} = props;
+    const {typeCounter, title, disabled, } = props;
     return (
         <button className={style.incButton}
                 onClick={typeCounter}

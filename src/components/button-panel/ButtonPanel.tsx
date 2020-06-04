@@ -9,33 +9,33 @@ type ButtonPanelPropsType = {
     resetCounter: () => void;
     counter: number;
     maxCount: number,
-   // buttons: Array<ButtonsType1>
+    buttons: Array<ButtonsType1>
 }
 
 const ButtonPanel = (props: ButtonPanelPropsType) => {
-    const {incrementCounter, resetCounter, counter, maxCount} = props;
+    const {incrementCounter, resetCounter, counter, maxCount, buttons} = props;
     return (
         <div className={style.buttonBlock}>
-            {/*{*/}
-            {/*    buttons.map(elem => {*/}
-            {/*        return (*/}
-            {/*            <Button key={elem.buttonId}*/}
-            {/*                    title={elem.title}*/}
-            {/*                    typeCounter={incrementCounter}*/}
-            {/*                    disabled={elem.disabled}*/}
-            {/*            />*/}
-            {/*        );*/}
-            {/*    })*/}
-            {/*}*/}
-            <Button title={'INC'}
-                    typeCounter={incrementCounter}
-                    disabled={counter === maxCount}
-            />
-            <Button title={'RESET'}
-                    typeCounter={resetCounter}
-                    disabled={counter === 0}
+            {
+                buttons.map(elem => {
+                    return (
+                        <Button key={elem.buttonId}
+                                title={elem.title}
+                                typeCounter={elem.onClick}
+                                disabled={elem.disabled}
+                        />
+                    );
+                })
+            }
+            {/*<Button title={'INC'}*/}
+            {/*        typeCounter={incrementCounter}*/}
+            {/*        disabled={counter === maxCount}*/}
+            {/*/>*/}
+            {/*<Button title={'RESET'}*/}
+            {/*        typeCounter={resetCounter}*/}
+            {/*        disabled={counter === 0}*/}
 
-            />
+            {/*/>*/}
             {/*<button className={style.incButton}
                     onClick={incrementCounter}
                     disabled={counter === maxCount}

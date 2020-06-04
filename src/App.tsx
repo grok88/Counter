@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Counter} from "./Counter";
 import {v1} from "uuid";
@@ -9,7 +9,9 @@ function App() {
     let [counter, setCounter] = useState<number>(0);
 
     const incrementCounter = () => {
+        console.log(1)
         setCounter(counter => counter + 1);
+
     }
 
     const resetCounter = () => {
@@ -19,12 +21,14 @@ function App() {
     let [counters, setCounters] = useState([
         {
             id: v1(),
-            // buttons:[
-            //     {buttonId:v1(), title:"INC", disabled:counter === maxCount},
-            //     {buttonId:v1(), title:"RESET", disabled:counter === 0},
-            // ]
+            buttons:[
+                {buttonId:v1(), title:"INC", disabled:false, onClick: () => incrementCounter},
+                {buttonId:v1(), title:"RESET", disabled:false, onClick: () => resetCounter},
+            ]
         }
     ]);
+
+
 
     return (
         <>
@@ -36,10 +40,11 @@ function App() {
                         incrementCounter={incrementCounter}
                         maxCount={maxCount}
                         counter={counter}
-                      //  buttons={elem.buttons}
+                       buttons={elem.buttons}
                     />
                 })
             }
+
             {/*<Counter resetCounter={resetCounter}*/}
             {/*         incrementCounter={incrementCounter}*/}
             {/*         maxCount={maxCount}*/}
