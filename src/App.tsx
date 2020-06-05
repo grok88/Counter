@@ -12,15 +12,18 @@ export type InitialCountType = {
 
 function App() {
 
-    useEffect( ()=> {
-        // onChangeMin(-4)
-        // let stateAsString = localStorage.getItem('state')
-        //
-        // if (!!stateAsString) {
-        //     let newState = JSON.parse(stateAsString)
-        //     setInitialCount({...newState})
-        // }
-    }, [] )
+    useEffect(() => {
+        let stateAsString = localStorage.getItem('state');
+
+        if (!!stateAsString) {
+            let newState = JSON.parse(stateAsString);
+            setInitialCount({...newState});
+            // Чтоб отображалась на дисплее засетанное значения с localStorage
+            counter = newState.min;
+            setCounter(counter);
+        }
+
+    }, [])
 
     // Для добавления класса ошибуи на инпуты при неверных значениях
     let [error, setError] = useState<boolean>(false);
@@ -39,7 +42,6 @@ function App() {
 
     const addToLocalStorage = () => {
         localStorage.setItem('state', JSON.stringify(initialCount));
-        // localStorage.setItem('max',String(initialCount.max));
     }
 
     const incrementCounter = () => {
@@ -47,7 +49,6 @@ function App() {
     }
 
     const resetCounter = () => {
-        console.log(counter)
         setCounter(initialCount.min);
     }
 
@@ -57,11 +58,9 @@ function App() {
         counter = initialCount.min;
         setCounter(counter);
 
-        initialCount.disabled = true;
-        setInitialCount({...initialCount});
-
+        // initialCount.disabled = true;
+        setInitialCount({...initialCount, disabled: true});
         addToLocalStorage();
-
     }
     // Установка минимальное значения
     const onChangeMin = (value: number) => {
@@ -69,38 +68,47 @@ function App() {
             setError(true);
             setMessage('Incorrect value');
 
-            setInitialCount({...initialCount,
+            setInitialCount({
+                ...initialCount,
                 min: value,
-                disabled: true});
-            console.log('initialCount: ', initialCount)
+                disabled: true
+            });
         } else {
             setError(false);
             setMessage('Enter value press Set');
             setInitialCount({
                 ...initialCount,
                 min: value,
-                disabled: false});
+                disabled: false
+            });
         }
     }
-    // Установка максимального значения значения
+    // Установка максимального значения
     const onChangeMax = (value: number) => {
 
         if (value <= initialCount.min) {
             setError(true);
             setMessage('Incorrect value');
-            initialCount.disabled = true;
-            setInitialCount({...initialCount});
-           // setInitialCount({...initialCount, disabled: true});
+            //initialCount.disabled = true;
+            //setInitialCount({...initialCount});
+            setInitialCount({
+                ...initialCount,
+                max: value,
+                disabled: true
+            });
         } else {
             setError(false);
-            initialCount.disabled = false;
-            setInitialCount({...initialCount, disabled: false});
+            setInitialCount({
+                ...initialCount,
+                max: value,
+                disabled: false
+            });
             setMessage('Enter value press Set');
         }
 
-        setInitialCount({
-            ...initialCount, max: value
-        });
+        // setInitialCount({
+        //     ...initialCount, max: value
+        // });
     }
     return (
         <>
