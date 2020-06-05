@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import Display from "./components/display/Display";
 import {Button} from "./components/button-panel/Button";
@@ -11,6 +11,17 @@ export type InitialCountType = {
 }
 
 function App() {
+
+    useEffect( ()=> {
+        // onChangeMin(-4)
+        // let stateAsString = localStorage.getItem('state')
+        //
+        // if (!!stateAsString) {
+        //     let newState = JSON.parse(stateAsString)
+        //     setInitialCount({...newState})
+        // }
+    }, [] )
+
     // Для добавления класса ошибуи на инпуты при неверных значениях
     let [error, setError] = useState<boolean>(false);
     //Отображение на display сообщений при ошибках, изменении значений и самого count
@@ -25,6 +36,11 @@ function App() {
             disabled: false
         }
     )
+
+    const addToLocalStorage = () => {
+        localStorage.setItem('state', JSON.stringify(initialCount));
+        // localStorage.setItem('max',String(initialCount.max));
+    }
 
     const incrementCounter = () => {
         setCounter(counter => counter + 1);
@@ -44,25 +60,27 @@ function App() {
         initialCount.disabled = true;
         setInitialCount({...initialCount});
 
+        addToLocalStorage();
+
     }
     // Установка минимальное значения
     const onChangeMin = (value: number) => {
         if (value < 0 || value >= initialCount.max) {
             setError(true);
             setMessage('Incorrect value');
-            initialCount.disabled = true;
-            setInitialCount({...initialCount});
-            //setInitialCount({...initialCount, disabled: true});
+
+            setInitialCount({...initialCount,
+                min: value,
+                disabled: true});
+            console.log('initialCount: ', initialCount)
         } else {
             setError(false);
-            initialCount.disabled = false;
             setMessage('Enter value press Set');
-            setInitialCount({...initialCount,disabled: false});
+            setInitialCount({
+                ...initialCount,
+                min: value,
+                disabled: false});
         }
-
-        setInitialCount({
-            ...initialCount, min: value
-        });
     }
     // Установка максимального значения значения
     const onChangeMax = (value: number) => {
