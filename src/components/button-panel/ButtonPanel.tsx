@@ -14,6 +14,7 @@ type ButtonPanelPropsType = {
 
 const ButtonPanel = (props: ButtonPanelPropsType) => {
     const {incrementCounter, resetCounter, counter, maxCount, buttons} = props;
+
     return (
         <div className={style.buttonBlock}>
             {

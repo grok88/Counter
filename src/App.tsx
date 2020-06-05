@@ -9,12 +9,14 @@ function App() {
     let [counter, setCounter] = useState<number>(0);
 
     const incrementCounter = () => {
+        debugger
         console.log(1)
         setCounter(counter => counter + 1);
 
     }
 
     const resetCounter = () => {
+        debugger
         setCounter(0);
     }
 
@@ -22,8 +24,8 @@ function App() {
         {
             id: v1(),
             buttons:[
-                {buttonId:v1(), title:"INC", disabled:false, onClick: () => incrementCounter},
-                {buttonId:v1(), title:"RESET", disabled:false, onClick: () => resetCounter},
+                {buttonId:v1(), title:"INC", disabled:false, onClick: () => incrementCounter()},
+                {buttonId:v1(), title:"RESET", disabled:false, onClick: () => resetCounter()},
             ]
         }
     ]);
