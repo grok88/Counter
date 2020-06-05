@@ -17,10 +17,11 @@ function App() {
 
         if (!!stateAsString) {
             let newState = JSON.parse(stateAsString);
-            setInitialCount({...newState});
+            setInitialCount({...newState, disabled: true});
             // Чтоб отображалась на дисплее засетанное значения с localStorage
             counter = newState.min;
             setCounter(counter);
+
         }
 
     }, [])
