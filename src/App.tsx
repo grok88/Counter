@@ -7,7 +7,7 @@ import {InputBlock} from "./InputBlock";
 export type InitialCountType = {
     min: number,
     max: number,
-    disabled: boolean
+    disabled: boolean,
 }
 
 function App() {
@@ -21,7 +21,11 @@ function App() {
             // Чтоб отображалась на дисплее засетанное значения с localStorage
             counter = newState.min;
             setCounter(counter);
+        }
 
+        let checked = localStorage.getItem('checked');
+        if(checked){
+            setCheck(JSON.parse(checked));
         }
 
     }, [])
@@ -43,6 +47,7 @@ function App() {
 
     const addToLocalStorage = () => {
         localStorage.setItem('state', JSON.stringify(initialCount));
+        localStorage.setItem('checked', JSON.stringify(check));
     }
 
     const incrementCounter = () => {
@@ -58,10 +63,15 @@ function App() {
         setMessage(null);
         counter = initialCount.min;
         setCounter(counter);
-
-        // initialCount.disabled = true;
         setInitialCount({...initialCount, disabled: true});
-        addToLocalStorage();
+        // initialCount.disabled = true;
+
+        if (check){
+            addToLocalStorage();
+        } else {
+            localStorage.clear();
+        }
+
     }
     // Установка минимальное значения
     const onChangeMin = (value: number) => {
@@ -106,18 +116,27 @@ function App() {
             });
             setMessage('Enter value press Set');
         }
-
-        // setInitialCount({
-        //     ...initialCount, max: value
-        // });
     }
+
+    // change checkbox and choose localStorage
+    let [check, setCheck] = useState<boolean>(false);
+
+    const changeChecked = (check:boolean) => {
+         console.log(check);
+        setCheck(check);
+    }
+
     return (
         <>
             {/*Блок установки значений*/}
             <div className={'counterBlock'}>
                 <InputBlock counter={initialCount}
+                            check={check}
                             onChangeMin={onChangeMin}
-                            onChangeMax={onChangeMax} error={error}/>
+                            onChangeMax={onChangeMax}
+                            error={error}
+                            checked={changeChecked}
+                />
                 <div className={'buttonBlock'}>
                     <Button title={'SET'}
                             typeCounter={setInitialValue}
