@@ -12,9 +12,10 @@ export type InitialCountType = {
 
 function App() {
 
+
     useEffect(() => {
         let stateAsString = localStorage.getItem('state');
-
+        console.log(stateAsString)
         if (!!stateAsString) {
             let newState = JSON.parse(stateAsString);
             setInitialCount({...newState, disabled: true});
@@ -24,7 +25,8 @@ function App() {
         }
 
         let checked = localStorage.getItem('checked');
-        if(checked){
+        console.log(checked)
+        if (checked) {
             setCheck(JSON.parse(checked));
         }
 
@@ -43,7 +45,9 @@ function App() {
             max: 5,
             disabled: false
         }
-    )
+    );
+    // change checkbox and choose localStorage
+    let [check, setCheck] = useState<boolean>(false);
 
     const addToLocalStorage = () => {
         localStorage.setItem('state', JSON.stringify(initialCount));
@@ -66,7 +70,7 @@ function App() {
         setInitialCount({...initialCount, disabled: true});
         // initialCount.disabled = true;
 
-        if (check){
+        if (check) {
             addToLocalStorage();
         } else {
             localStorage.clear();
@@ -118,11 +122,8 @@ function App() {
         }
     }
 
-    // change checkbox and choose localStorage
-    let [check, setCheck] = useState<boolean>(false);
-
-    const changeChecked = (check:boolean) => {
-         console.log(check);
+    const changeChecked = (check: boolean) => {
+        console.log(check);
         setCheck(check);
     }
 
