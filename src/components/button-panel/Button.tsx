@@ -7,8 +7,10 @@ type ButtonType = {
     disabled: boolean
 }
 
-export const Button = (props: ButtonType) => {
+
+export const Button = React.memo((props: ButtonType) => {
     const {typeCounter, title, disabled} = props;
+    console.log('Button' + title)
     return (
         <button className={style.incButton}
                 onClick={typeCounter}
@@ -16,4 +18,5 @@ export const Button = (props: ButtonType) => {
         >{title}
         </button>
     );
-}
+});
+
