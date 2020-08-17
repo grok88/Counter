@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import Display from "./components/display/Display";
 import {Button} from "./components/button-panel/Button";
@@ -21,7 +21,7 @@ export type InitialCountType = {
 }
 
 function App() {
-
+    console.log('App');
     const dispatch = useDispatch();
     const counterRedux = useSelector<AppRootState, CounterReducerInitialType>(state => state.counter);
 
@@ -40,22 +40,22 @@ function App() {
 
     }, [dispatch]);
 
-    const addToLocalStorage = () => {
+    const addToLocalStorage = useCallback(() => {
         localStorage.setItem('state', JSON.stringify(counterRedux.initialCount));
         localStorage.setItem('checked', JSON.stringify(counterRedux.check));
-    }
+    },[counterRedux.initialCount, counterRedux.check]);
 
-    const incrementCounter = () => {
-        let count = counterRedux.counter + 1;
-        dispatch(setCounter(count));
-    }
-
-    const resetCounter = () => {
+    //Button type
+    const incrementCounter = useCallback(() => {
+        dispatch(setCounter(counterRedux.counter + 1));
+    }, [dispatch, counterRedux.counter])
+    const resetCounter = useCallback(() => {
         dispatch(setCounter(counterRedux.initialCount.min));
-    }
+    }, [dispatch, counterRedux.initialCount.min]);
 
+    //InputBlock
     // Передача начальных значений установленых в <InputBlock>
-    const setInitialValue = () => {
+    const setInitialValue = useCallback(() => {
         dispatch(setMessage(null));
         dispatch(setCounter(counterRedux.initialCount.min));
 
@@ -67,23 +67,21 @@ function App() {
             localStorage.clear();
         }
 
-    }
+    }, [dispatch, counterRedux.initialCount.min,counterRedux.check,addToLocalStorage]);
     // Установка минимальное значения
-    const onChangeMin = (value: number) => {
-        console.log(value)
+    const onChangeMin = useCallback((value: number) => {
         if (value < 0 || value >= counterRedux.initialCount.max) {
             dispatch(setError(true));
             dispatch(setMessage('Incorrect value'));
             dispatch(setInitialCount(value, undefined, true));
         } else {
-            console.log(value)
             dispatch(setError(false));
             dispatch(setMessage('Enter value press Set'));
             dispatch(setInitialCount(value, undefined, false));
         }
-    }
+    }, [dispatch, counterRedux.initialCount.max]);
     // Установка максимального значения
-    const onChangeMax = (value: number) => {
+    const onChangeMax = useCallback((value: number) => {
         if (value <= counterRedux.initialCount.min) {
             dispatch(setError(true));
             dispatch(setMessage('Incorrect value'));
@@ -93,11 +91,11 @@ function App() {
             dispatch(setInitialCount(undefined, value, false));
             dispatch(setMessage('Enter value press Set'));
         }
-    }
-
-    const changeChecked = (check: boolean) => {
+    }, [dispatch, counterRedux.initialCount.min]);
+    // Записать в localStorage
+    const changeChecked = useCallback((check: boolean) => {
         dispatch(setCheck(check));
-    }
+    }, [dispatch]);
 
     return (
         <>
@@ -120,7 +118,8 @@ function App() {
 
             {/*Блок отображения счетчика*/}
             <div className={'counterBlock'}>
-                <Display counter={counterRedux.counter} initialCount={counterRedux.initialCount}
+                <Display counter={counterRedux.counter}
+                         initialCount={counterRedux.initialCount}
                          message={counterRedux.message}
                          error={counterRedux.error}/>
                 <div className={'buttonBlock'}>

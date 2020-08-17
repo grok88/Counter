@@ -14,15 +14,17 @@ type InputBlockType = {
     checked: (check: boolean) => void,
     check:boolean
 }
-export const InputBlock = (props: InputBlockType) => {
+export const InputBlock = React.memo((props: InputBlockType) => {
     const {counter, onChangeMin, onChangeMax, error, checked, check} = props;
+    console.log('InputBlock');
 
     const onChangeMinValue = (e: ChangeEvent<HTMLInputElement>) => {
         onChangeMin(Number(e.currentTarget.value));
-    }
+    };
+
     const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
         onChangeMax(Number(e.currentTarget.value));
-    }
+    };
 
     const onChangeChecked = (e:ChangeEvent<HTMLInputElement>) => {
         checked(e.currentTarget.checked);
@@ -45,4 +47,4 @@ export const InputBlock = (props: InputBlockType) => {
             </p>
         </div>
     );
-}
+});
