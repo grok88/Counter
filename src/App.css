@@ -1,9 +1,41 @@
 .counterBlock{
   width: 400px;
-  height: 250px;
+  height: 270px;
   margin: 10px auto;
   border: 3px solid #66D9F8;
   border-radius: 5px;
   /*background-color: #2A2C36;*/
 }
 
+.buttonBlock{
+  margin: 0 auto;
+  width: 80%;
+  /*outline: 1px solid;*/
+  height: 60px;
+  display: flex;
+  justify-content: space-evenly;
+  border: 3px solid #66D9F8;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.buttonBlock button {
+  width: 40%;
+}
+
+
+.inputBlock{
+  margin: 20px auto;
+  width: 80%;
+  height: 150px;
+  border: 3px solid #66D9F8;
+  border-radius: 5px;
+  text-align: center;
+  /*padding-top: 20px;*/
+}
+
+.error{
+  border:1px solid red;
+  background-color: #db9292;
+}
