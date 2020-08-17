@@ -9,9 +9,9 @@ import {
     CounterReducerInitialType,
     setCheck,
     setCounter,
-    setError,
+    setError, setIncrementCounter,
     setInitialCount,
-    setMessage
+    setMessage, setResetCounter
 } from "./store/counter-reducer";
 
 export type InitialCountType = {
@@ -43,15 +43,16 @@ function App() {
     const addToLocalStorage = useCallback(() => {
         localStorage.setItem('state', JSON.stringify(counterRedux.initialCount));
         localStorage.setItem('checked', JSON.stringify(counterRedux.check));
-    },[counterRedux.initialCount, counterRedux.check]);
+    },[]);
 
     //Button type
     const incrementCounter = useCallback(() => {
-        dispatch(setCounter(counterRedux.counter + 1));
-    }, [dispatch, counterRedux.counter])
+        dispatch(setIncrementCounter(counterRedux.counter + 1));
+    }, [dispatch])
+
     const resetCounter = useCallback(() => {
-        dispatch(setCounter(counterRedux.initialCount.min));
-    }, [dispatch, counterRedux.initialCount.min]);
+        dispatch(setResetCounter(counterRedux.initialCount.min));
+    }, [dispatch]);
 
     //InputBlock
     // Передача начальных значений установленых в <InputBlock>
@@ -67,7 +68,8 @@ function App() {
             localStorage.clear();
         }
 
-    }, [dispatch, counterRedux.initialCount.min,counterRedux.check,addToLocalStorage]);
+    }, [dispatch,counterRedux.check]);
+
     // Установка минимальное значения
     const onChangeMin = useCallback((value: number) => {
         if (value < 0 || value >= counterRedux.initialCount.max) {
@@ -79,7 +81,8 @@ function App() {
             dispatch(setMessage('Enter value press Set'));
             dispatch(setInitialCount(value, undefined, false));
         }
-    }, [dispatch, counterRedux.initialCount.max]);
+    }, [dispatch]);
+
     // Установка максимального значения
     const onChangeMax = useCallback((value: number) => {
         if (value <= counterRedux.initialCount.min) {
@@ -91,7 +94,7 @@ function App() {
             dispatch(setInitialCount(undefined, value, false));
             dispatch(setMessage('Enter value press Set'));
         }
-    }, [dispatch, counterRedux.initialCount.min]);
+    }, [dispatch]);
     // Записать в localStorage
     const changeChecked = useCallback((check: boolean) => {
         dispatch(setCheck(check));

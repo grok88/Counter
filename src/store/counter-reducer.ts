@@ -12,7 +12,15 @@ type SetCounterAC = {
     type: 'SET-COUNTER';
     value: number;
 }
-type setMessageAC = {
+type SetResetCounterAC = {
+    type: 'SET-RESET-COUNTER',
+    value: number;
+}
+type SetIncrementCounterAC = {
+    type: 'SET-INCREMENT-COUNTER',
+    value: number;
+}
+type SetMessageAC = {
     type: 'SET-MESSAGE';
     message: string | null;
 }
@@ -21,7 +29,14 @@ type SetCheckAC = {
     isChecked: boolean;
 }
 
-type CounterReducerType = SetInitialCountAC | SetErrorAC | SetCounterAC | setMessageAC | SetCheckAC;
+type CounterReducerType =
+    SetInitialCountAC
+    | SetErrorAC
+    | SetCounterAC
+    | SetMessageAC
+    | SetCheckAC
+    | SetResetCounterAC
+    | SetIncrementCounterAC;
 
 type InitialCountType = {
     min: number;
@@ -48,7 +63,7 @@ const initialState: CounterReducerInitialType = {
     check: false
 }
 
-export const counterReducer = (state: CounterReducerInitialType = initialState, action: CounterReducerType) => {
+export const counterReducer = (state: CounterReducerInitialType = initialState, action: CounterReducerType): CounterReducerInitialType => {
     switch (action.type) {
         case 'SET-INITIAL-COUNT' :
 
@@ -67,6 +82,16 @@ export const counterReducer = (state: CounterReducerInitialType = initialState, 
                 error: action.error
             }
         case 'SET-COUNTER':
+            return {
+                ...state,
+                counter: action.value
+            }
+        case 'SET-RESET-COUNTER':
+            return {
+                ...state,
+                counter: action.value
+            }
+        case 'SET-INCREMENT-COUNTER':
             return {
                 ...state,
                 counter: action.value
@@ -107,7 +132,19 @@ export const setCounter = (value: number): SetCounterAC => {
         value
     }
 }
-export const setMessage = (message: string | null): setMessageAC => {
+export const setResetCounter = (value: number): SetResetCounterAC => {
+    return {
+        type: 'SET-RESET-COUNTER',
+        value
+    }
+}
+export const setIncrementCounter = (value: number): SetIncrementCounterAC => {
+    return {
+        type: 'SET-INCREMENT-COUNTER',
+        value
+    }
+}
+export const setMessage = (message: string | null): SetMessageAC => {
     return {
         type: 'SET-MESSAGE',
         message

@@ -9,7 +9,7 @@ type ButtonType = {
 
 export const Button = React.memo((props: ButtonType) => {
     const {typeCounter, title, disabled} = props;
-    console.log('Button')
+    console.log('Button' + title)
     return (
         <button className={style.incButton}
                 onClick={typeCounter}
